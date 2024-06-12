@@ -3,15 +3,12 @@ server:
 
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/propertydb
+    url: r2dbc:postgresql://postgres:5432/dockerpropertydb
     username: postgres
     password: postgres
     r2dbc:
       repositories:
         enabled: true
-
-  profiles:
-    active: local
 
 geoapify:
   api:

@@ -19,11 +19,12 @@ services:
     ports:
       - "8080:8080"
       - "5005:5005"  # Map the debug port
-
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILE}  # Use the environment variable for the profile
     depends_on:
       - postgres
     volumes:
-      - ./config/application-local.yml:/app/config/application.yml  # Map the external config file
+      - ./config/application-${SPRING_PROFILE}.yml:/app/config/application.yml
 
 
 volumes:

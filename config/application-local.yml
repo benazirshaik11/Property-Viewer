@@ -10,9 +10,6 @@ spring:
       repositories:
         enabled: true
 
-  profiles:
-    active: local
-
 geoapify:
   api:
     key: 0687dd2de9174e4cbd654aacf71b59b4

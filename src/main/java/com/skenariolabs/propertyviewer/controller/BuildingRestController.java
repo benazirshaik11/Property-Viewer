@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+/** enable http basic authentication to make it working*/
 @RestController
 @RequestMapping("/api")
 public class BuildingRestController {

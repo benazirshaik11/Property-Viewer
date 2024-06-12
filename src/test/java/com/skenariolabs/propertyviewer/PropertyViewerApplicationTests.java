@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @ActiveProfiles({"test"})
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class PropertyViewerApplicationTests {
 
 
@@ -49,7 +49,7 @@ class PropertyViewerApplicationTests {
     public void testSecurityConfig() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/buildings"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("")); // Add expected content here
+                .andExpect(MockMvcResultMatchers.content().string(""));
     }
 
 
