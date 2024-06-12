@@ -10,15 +10,10 @@ spring:
       repositories:
         enabled: true
 
+  profiles:
+    active: local
+
 geoapify:
   api:
     key: 0687dd2de9174e4cbd654aacf71b59b4
     url: "https://api.geoapify.com/v1/geocode/search"
-
-
-
-
-logging:
-  level:
-    root: info
-    org.flywaydb: debug

@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+
+geoapify:
+  api:
+    key: key
+    url: "https://localhost:-1"

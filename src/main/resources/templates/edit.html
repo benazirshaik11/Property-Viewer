@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Edit Building</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>Edit Building</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
 </head>
 <body>
 <h1>Edit Building</h1>
-<form th:action="@{/buildings/{id}(id=${building.id})}" th:object="${building}" method="post">
-  <div>
-    <label>Name:</label>
-    <input type="text" th:field="*{name}">
-  </div>
-  <div>
-    <label>Street:</label>
-    <input type="text" th:field="*{street}">
-  </div>
-  <div>
-    <label>Number:</label>
-    <input type="text" th:field="*{number}">
-  </div>
-  <div>
-    <label>Post Code:</label>
-    <input type="text" th:field="*{postCode}">
-  </div>
-  <div>
-    <label>City:</label>
-    <input type="text" th:field="*{city}">
-  </div>
-  <div>
-    <label>Country:</label>
-    <input type="text" th:field="*{country}">
-  </div>
-  <div>
-    <label>Description:</label>
-    <input type="text" th:field="*{description}">
-  </div>
-  <div>
-    <button type="submit">Save</button>
-  </div>
+<form method="post" th:action="@{/buildings/{id}(id=${building.id})}" th:object="${building}">
+    <div>
+        <label>Name:</label>
+        <input th:field="*{name}" type="text">
+    </div>
+    <div>
+        <label>Street:</label>
+        <input th:field="*{street}" type="text">
+    </div>
+    <div>
+        <label>Number:</label>
+        <input th:field="*{number}" type="text">
+    </div>
+    <div>
+        <label>Post Code:</label>
+        <input th:field="*{postCode}" type="text">
+    </div>
+    <div>
+        <label>City:</label>
+        <input th:field="*{city}" type="text">
+    </div>
+    <div>
+        <label>Country:</label>
+        <input th:field="*{country}" type="text">
+    </div>
+    <div>
+        <label>Description:</label>
+        <input th:field="*{description}" type="text">
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
 </form>
 <a href="/buildings">Back to List</a>
 </body>

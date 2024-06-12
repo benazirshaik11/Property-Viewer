@@ -3,43 +3,29 @@ package com.skenariolabs.propertyviewer.service;
 import com.skenariolabs.propertyviewer.model.repo.Building;
 import com.skenariolabs.propertyviewer.model.request.BuildingRequest;
 import com.skenariolabs.propertyviewer.model.response.BuildingRepresentation;
-import com.skenariolabs.propertyviewer.model.response.GeoapifyResponse;
 import com.skenariolabs.propertyviewer.repository.BuildingRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 public class BuildingService {
 
     @Autowired
     private BuildingRepository buildingRepository;
 
     @Autowired
-    private WebClient.Builder webClientBuilder;
-
-    @Value("${geoapify.api.url}")
-    private String geoapifyUrl;
-
-    @Value("${geoapify.api.key}")
-    private String geoapifyApiKey;
+    private GeoapifyService geoapifyService;
 
     public Mono<BuildingRepresentation> saveBuilding(BuildingRequest building) {
         Building newBuilding = mapToEntity(building);
-        return fetchCoordinates(newBuilding)
+        return geoapifyService.fetchCoordinates(newBuilding)
                 .flatMap(coordinates -> {
                     newBuilding.setLatitude(coordinates.getLatitude());
                     newBuilding.setLongitude(coordinates.getLongitude());
@@ -56,6 +42,12 @@ public class BuildingService {
 
     }
 
+
+    public Flux<BuildingRepresentation> getAllBuildings() {
+        return buildingRepository.findAll().map(this::mapToResponse);
+
+    }
+
     public Mono<BuildingRepresentation> findBuildingById(Long id) {
         return buildingRepository.findById(id).map(this::mapToResponse);
     }
@@ -67,7 +59,7 @@ public class BuildingService {
                     boolean isAddressChanged = isAddressChanged(existingBuilding, newBuilding);
                     copyEmptyFields(newBuilding, existingBuilding);
                     if (isAddressChanged) {
-                        return fetchCoordinates(newBuilding)
+                        return geoapifyService.fetchCoordinates(newBuilding)
                                 .flatMap(coordinates -> {
                                     newBuilding.setLatitude(coordinates.getLatitude());
                                     newBuilding.setLongitude(coordinates.getLongitude());
@@ -84,8 +76,8 @@ public class BuildingService {
     public Mono<Void> addMultipleBuildings(List<BuildingRequest> buildingRequests) {
         return Flux.fromIterable(buildingRequests)
                 .flatMap(buildingRequest -> {
-                    Building building=this.mapToEntity(buildingRequest);
-                    return this.fetchCoordinates(building)
+                    Building building = this.mapToEntity(buildingRequest);
+                    return geoapifyService.fetchCoordinates(building)
                             .map(coordinates -> {
                                 building.setLatitude(coordinates.getLatitude());
                                 building.setLongitude(coordinates.getLongitude());
@@ -93,8 +85,9 @@ public class BuildingService {
                             });
                 })
                 .collectList()
-                .flatMapMany(buildingRepository::saveAll)
-                .then();
+                .flatMapMany(list ->
+                        buildingRepository.saveAll(list)
+                ).then();
     }
 
     public Mono<Void> deleteBuilding(Long id) {
@@ -104,25 +97,6 @@ public class BuildingService {
 
     private Page<BuildingRepresentation> mapToResponsePage(Page<Building> buildings) {
         return buildings.map(this::mapToResponse);
-    }
-
-
-    private Mono<GeoapifyResponse.Feature.Geometry> fetchCoordinates(Building building) {
-        String address = String.format("%s %s, %s, %s, %s",
-                building.getNumber(),
-                building.getStreet(),
-                building.getCity(),
-                building.getPostCode(),
-                building.getCountry());
-
-        String geoapifyUrl = String.format(this.geoapifyUrl + "?text=%s&apiKey=%s", address, geoapifyApiKey);
-
-        return webClientBuilder.build()
-                .get()
-                .uri(geoapifyUrl)
-                .retrieve()
-                .bodyToMono(GeoapifyResponse.class)
-                .map(response -> response.getFeatures().get(0).getGeometry());
     }
 
 
