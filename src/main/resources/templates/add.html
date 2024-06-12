@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add New Buildings</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+  <script>
+    let buildingIndex = 0;
+
+    function addBuildingInput() {
+        const buildingInputs = document.getElementById('buildingInputs');
+        const newBuildingInput = document.querySelector('.buildingInputTemplate').cloneNode(true);
+        newBuildingInput.classList.remove('buildingInputTemplate');
+        newBuildingInput.style.display = 'block';
+
+        // Update the name attributes with the current index
+        newBuildingInput.querySelectorAll('input, textarea').forEach(input => {
+            input.name = input.name.replace(/\[0\]/, '[' + buildingIndex + ']');
+        });
+
+        buildingInputs.appendChild(newBuildingInput);
+        buildingIndex++;
+    }
+
+    function removeBuildingInput(button) {
+        const buildingInput = button.parentElement;
+        buildingInput.remove();
+    }
+
+    window.onload = () => {
+        addBuildingInput(); // Add the first input on load
+    };
+  </script>
+</head>
+<body>
+
+<h2>Add New Buildings</h2>
+<form id="buildingForm" method="post" th:action="@{/buildings/add-multiple}">
+  <div id="buildingInputs">
+    <div class="buildingInputTemplate" style="display: none;">
+      <input type="text" name="buildings[0].name" placeholder="Name" required>
+      <input type="text" name="buildings[0].street" placeholder="Street" required>
+      <input type="text" name="buildings[0].number" placeholder="Number" required>
+      <input type="text" name="buildings[0].postalCode" placeholder="Postal Code" required>
+      <input type="text" name="buildings[0].city" placeholder="City" required>
+      <input type="text" name="buildings[0].country" placeholder="Country" required>
+      <textarea name="buildings[0].description" placeholder="Description"></textarea>
+      <button type="button" onclick="removeBuildingInput(this)">Remove</button>
+      <br><br>
+    </div>
+  </div>
+  <button type="button" onclick="addBuildingInput()">Add Another Building</button>
+  <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

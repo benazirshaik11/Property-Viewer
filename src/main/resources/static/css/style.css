@@ -1,0 +1,133 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+input[type="submit"] {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+a.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+a.button:hover {
+    background-color: #0056b3;
+}
+/* Add styles for the navigation bar */
+
+/* Style for the buttons */
+.navbar a,
+.navbar form button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.navbar form button {
+    background-color: #dc3545;
+}
+
+.navbar a:hover,
+.navbar form button:hover {
+    background-color: #0056b3;
+}
+
+/* Add styles for the navigation bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+/* Style for the buttons */
+.navbar .button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.navbar .button:hover {
+    background-color: #0056b3;
+}

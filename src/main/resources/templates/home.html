@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home - Property Viewer</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="navbar">
+    <h1>Welcome to Property Viewer</h1>
+
+    <div th:unless="${#authorization.expression('isAuthenticated()')}">
+        <a class="button" th:href="@{/login}">Login</a>
+    </div>
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <a class="button" th:href="@{/logout}">Log out</a>
+    </div>
+</div>
+<a class="button" th:href="@{/buildings/add}">Add New Building</a>
+
+<table>
+    <thead>
+    <tr>
+        <th><a th:href="@{'/buildings?page=' + ${page.pageable.pageNumber} + '&size=' + ${page.pageable.pageSize} + '&sort=name,' + ${sortDirection=='ASC'?'DESC':'ASC'}}">Name</a></th>
+        <th><a th:href="@{'/buildings?page=' + ${page.pageable.pageNumber} + '&size=' + ${page.pageable.pageSize} + '&sort=street,' + ${sortDirection=='ASC'?'DESC':'ASC'}}">Street</a></th>
+        <th><a th:href="@{'/buildings?page=' + ${page.pageable.pageNumber} + '&size=' + ${page.pageable.pageSize} + '&sort=number,' + ${sortDirection=='ASC'?'DESC':'ASC'}}">Number</a></th>
+        <th><a th:href="@{'/buildings?page=' + ${page.pageable.pageNumber} + '&size=' + ${page.pageable.pageSize} + '&sort=postCode,' + ${sortDirection=='ASC'?'DESC':'ASC'}}">Post Code</a></th>
+        <th><a th:href="@{'/buildings?page=' + ${page.pageable.pageNumber} + '&size=' + ${page.pageable.pageSize} + '&sort=city,' + ${sortDirection=='ASC'?'DESC':'ASC'}}">City</a></th>
+        <th><a th:href="@{'/buildings?page=' + ${page.pageable.pageNumber} + '&size=' + ${page.pageable.pageSize} + '&sort=country,' + ${sortDirection=='ASC'?'DESC':'ASC'}}">Country</a></th>
+        <th><a th:href="@{'/buildings?page=' + ${page.pageable.pageNumber} + '&size=' + ${page.pageable.pageSize} + '&sort=description,' + ${sortDirection=='ASC'?'DESC':'ASC'}}">Description</a></th>
+        <th>Google Maps</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="building : ${buildings}">
+        <td th:text="${building.name}"></td>
+        <td th:text="${building.street}"></td>
+        <td th:text="${building.number}"></td>
+        <td th:text="${building.postCode}"></td>
+        <td th:text="${building.city}"></td>
+        <td th:text="${building.country}"></td>
+        <td th:text="${building.description}"></td>
+        <td>
+            <a th:href="'https://www.google.com/maps?q=' + ${building.latitude} + ',' + ${building.longitude}"
+               target="_blank">View on Map</a>
+        </td>
+        <td>
+            <a th:href="@{/buildings/edit/{id}(id=${building.id})}">Edit</a> |
+            <a th:href="@{/buildings/delete/{id}(id=${building.id})}"
+               onclick="return confirm('Are you sure you want to delete this building?');">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <span th:if="${page.hasPrevious()}">
+        <a th:href="@{'/buildings?page=' + ${page.number - 1} + '&size=' + ${page.size} + '&sort=' + ${sortProperty} + ',' + ${sortDirection}}">&lt; Previous</a>
+
+    </span>
+    <span th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}">
+        <a th:href="@{'/buildings?page=' + ${i} + '&size=' + ${page.size} + '&sort=' + ${sortProperty} + ',' + ${sortDirection}}" th:text="${i + 1}">1</a>
+
+    </span>
+    <span th:if="${page.hasNext()}">
+        <a th:href="@{'/buildings?page=' + ${page.number + 1} + '&size=' + ${page.size} + '&sort=' + ${sortProperty} + ',' + ${sortDirection}}"> Next&gt;</a>
+    </span>
+</div>
+
+</body>
+</html>

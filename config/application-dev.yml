@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/propertydb
+    username: postgres
+    password: postgres
+    r2dbc:
+      repositories:
+        enabled: true
+
+geoapify:
+  api:
+    key: 0687dd2de9174e4cbd654aacf71b59b4
+    url: "https://api.geoapify.com/v1/geocode/search"
+
+
+
+
+logging:
+  level:
+    root: info
+    org.flywaydb: debug

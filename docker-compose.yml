@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: property-viewer-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
+
+  app:
+    build: .
+    container_name: property-viewer-app
+    ports:
+      - "8080:8080"
+      - "5005:5005"  # Map the debug port
+
+    depends_on:
+      - postgres
+    volumes:
+      - ./config/application-local.yml:/app/config/application.yml  # Map the external config file
+
+
+volumes:
+  postgres_data:

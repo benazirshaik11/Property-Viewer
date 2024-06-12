@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://postgres:5432/dockerpropertydb
+    username: postgres
+    password: postgres
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 50
+    r2dbc:
+      repositories:
+        enabled: true
+
+  profiles:
+    active: local
+
+geoapify:
+  api:
+    key: 0687dd2de9174e4cbd654aacf71b59b4
+    url: "https://api.geoapify.com/v1/geocode/search"
+
+
+
