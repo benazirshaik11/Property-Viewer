@@ -8,6 +8,7 @@ Property Viewer is a web application for managing property data. This project us
 - [Technologies Used](#technologies-used)
 - [Setup Instructions](#setup-instructions)
 - [Running the Application](#running-the-application)
+- [Home page](#home-page)
 
 ## Project Overview
 
@@ -78,5 +79,6 @@ docker-compose up --build
 
 
 
-
 ```
+### Home page
+- http://localhost:8080/buildings
