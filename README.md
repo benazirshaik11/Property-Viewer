@@ -54,10 +54,11 @@ cd property-viewer
 - JDK 21
 - Gradle
 - PostgreSQL
-- powershell
-
 
 ```bash
+## please set JAVA_HOME
+## make sure application.yml is pointing to the database
+## make sure building table is created reference /init/init.sql
 
 ./gradlew clean build
 java -jar "-Dspring.profiles.active=local" .\build\libs\propertyviewer-0.0.2-SNAPSHOT.jar
@@ -68,8 +69,18 @@ java -jar "-Dspring.profiles.active=local" .\build\libs\propertyviewer-0.0.2-SNA
 ### Prerequisites
 
 - Docker
+- docker-compose
 - powershell
 
 ```bash
-$env:SPRING_PROFILE="dev"; docker-compose up --build
+## cmd
+set SPRING_PROFILE=dev
+## powerShell
+$env:SPRING_PROFILE="dev"
+docker-compose up --build
+
+
+
+
+
 ```
