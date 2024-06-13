@@ -8,11 +8,6 @@ Property Viewer is a web application for managing property data. This project us
 - [Technologies Used](#technologies-used)
 - [Setup Instructions](#setup-instructions)
 - [Running the Application](#running-the-application)
-- [Testing](#testing)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Project Overview
 
@@ -46,6 +41,7 @@ git clone https://github.com/benazirshaik11/Property-Viewer.git
 cd property-viewer
 
 ```
+### Running the Application
 
 ### Running as a spring-boot application
 
