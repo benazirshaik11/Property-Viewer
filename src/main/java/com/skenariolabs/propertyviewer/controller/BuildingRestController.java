@@ -8,27 +8,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-/** enable http basic authentication to make it working*/
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/buildings")
 public class BuildingRestController {
 
     @Autowired
     private BuildingService buildingService;
 
-    @GetMapping("/buildings")
+    @GetMapping
     public Flux<BuildingRepresentation> getAllBuildings() {
         return buildingService.getAllBuildings();
     }
 
-    @PostMapping("/buildings/add-multiple")
+    @PostMapping("/add-multiple")
     public Mono<Void> addMultipleBuildings(@RequestBody BuildingForm buildingForm) {
         return buildingService.addMultipleBuildings(buildingForm.getBuildings());
     }
 
-    @PostMapping("/buildings")
-    public Mono<Void> createBuilding(@RequestBody BuildingRequest buildingRequest) {
-        return buildingService.saveBuilding(buildingRequest).then();
+    @PostMapping
+    public Mono<BuildingRepresentation> createBuilding(@RequestBody BuildingRequest buildingRequest) {
+        return buildingService.saveBuilding(buildingRequest);
     }
 
     @GetMapping("/{id}")

@@ -67,13 +67,14 @@ java -jar "-Dspring.profiles.active=local" .\build\libs\propertyviewer-0.0.2-SNA
 
 - Docker
 - docker-compose
-- powershell
 
 ```bash
+
 ## cmd
 set SPRING_PROFILE=dev
 ## powerShell
 $env:SPRING_PROFILE="dev"
+
 docker-compose up --build
 
 

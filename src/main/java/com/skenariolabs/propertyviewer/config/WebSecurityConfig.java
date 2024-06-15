@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -18,7 +20,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/**", "/css/style.css", "/buildings").permitAll()
+                        .requestMatchers("/css/style.css", "/buildings").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -26,7 +28,8 @@ public class WebSecurityConfig {
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)
-        ;
+                .httpBasic(withDefaults())
+                .csrf().disable();
 
         return http.build();
     }
