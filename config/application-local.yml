@@ -9,6 +9,9 @@ spring:
     r2dbc:
       repositories:
         enabled: true
+  security:
+    user:
+      password: pwd
 
 geoapify:
   api:
